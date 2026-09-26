@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tilen Zrnec</title>
+  <meta name="description" content="Tilen Zrnec: computer science student at FRI, University of Ljubljana, building a self-hosted homelab.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page">
+
+    <!-- About you -->
+    <header>
+      <h1>Tilen Zrnec</h1>
+      <p class="lead">Computer science student at FRI, University of Ljubljana.</p>
+      <p>I'm building a small homelab to self-host my photos and music. Below is what it's doing right now.</p>
+      <ul class="links">
+        <li><a href="https://github.com/TilenZrnec">GitHub</a></li>
+        <!-- <li><a href="https://www.linkedin.com/in/YOUR-NAME/">LinkedIn</a></li> -->
+      </ul>
+    </header>
+
+    <!-- Live status from the home server. script.js fills in the values. -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Homelab</h2>
+        <p class="lab-state" id="lab-state" data-state="unknown">
+          <span class="dot"></span>
+          <span id="lab-state-text">Checking…</span>
+        </p>
+      </div>
+      <div class="card">
+        <dl class="stats">
+          <div><dt>Uptime</dt><dd id="uptime">–</dd></div>
+          <div><dt>CPU</dt><dd id="cpu">–</dd></div>
+          <div><dt>Memory</dt><dd id="memory">–</dd></div>
+          <div><dt>Temperature</dt><dd id="temperature">–</dd></div>
+        </dl>
+        <ul class="services" id="services"></ul>
+        <p class="note" id="lab-note"></p>
+      </div>
+    </section>
+
+    <!-- Your roadmap. As you finish a step, change its tag, e.g. <span class="tag done">✓ Done</span> -->
+    <section class="section">
+      <h2>What I'm building</h2>
+      <ul class="plan">
+        <li><span>This website</span><span class="tag progress">In progress</span></li>
+        <li><span>A home server</span><span class="tag">Planned</span></li>
+        <li><span>Linux, SSH and Tailscale</span><span class="tag">Planned</span></li>
+        <li><span>Live server status on this page</span><span class="tag">Planned</span></li>
+        <li><span>Music: self-hosted instead of Spotify</span><span class="tag">Planned</span></li>
+        <li><span>Photos: self-hosted instead of Google Photos</span><span class="tag">Planned</span></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <a href="https://github.com/TilenZrnec/Personal-Website">Source on GitHub</a>
+  </footer>
+</body>
+</html>
