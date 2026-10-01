@@ -1,3 +1,3 @@
 # tilenserver.com
 
-My personal website and homelab. The plan is in [ROADMAP.md](ROADMAP.md).
+My personal website and homelab. The plan and the server setup are in [CLAUDE.md](CLAUDE.md).
