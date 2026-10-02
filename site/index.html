@@ -3,21 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tilen Zrnec</title>
-  <meta name="description" content="Tilen Zrnec: computer science student at FRI, University of Ljubljana, building a self-hosted homelab.">
+  <title>Tilen's home server</title>
+  <meta name="description" content="Tilen's home server: a laptop running Ubuntu Server, with its live status. Built by Tilen Zrnec, a computer science student at FRI, University of Ljubljana.">
+  <!-- Tab icon: browsers that understand SVG use icon.svg, older ones favicon.ico; iPhones use apple-touch-icon.png for the home screen. -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <main class="page">
 
-    <!-- About you -->
+    <!-- About the server and you -->
     <header>
-      <h1>Tilen Zrnec</h1>
-      <p class="lead">Computer science student at FRI, University of Ljubljana.</p>
-      <p>I'm building a small homelab to self-host my photos and music. Below is what it's doing right now.</p>
+      <p class="eyebrow">tilenserver.com</p>
+      <h1>Tilen's home server</h1>
+      <p class="lead">A laptop at home that runs Linux around the clock.</p>
+      <p>I'm Tilen Zrnec, a computer science student at FRI, University of Ljubljana. I use this server to learn self-hosting, and soon it will stream my music and keep my photos. Below is what it's doing right now.</p>
       <ul class="links">
-        <li><a href="https://github.com/TilenZrnec">GitHub</a></li>
+        <li><a href="https://github.com/TilenZrnec/tilenserver-homelab">Source on GitHub</a></li>
         <!-- <li><a href="https://www.linkedin.com/in/YOUR-NAME/">LinkedIn</a></li> -->
       </ul>
     </header>
@@ -25,7 +30,7 @@
     <!-- Live status from the home server. script.js fills in the values. -->
     <section class="section">
       <div class="section-head">
-        <h2>Homelab</h2>
+        <h2>Live status</h2>
         <p class="lab-state" id="lab-state" data-state="unknown">
           <span class="dot"></span>
           <span id="lab-state-text">Checking…</span>
@@ -34,8 +39,14 @@
       <div class="card">
         <dl class="stats">
           <div><dt>Uptime</dt><dd id="uptime">–</dd></div>
-          <div><dt>CPU</dt><dd id="cpu">–</dd></div>
-          <div><dt>Memory</dt><dd id="memory">–</dd></div>
+          <div>
+            <dt>CPU</dt>
+            <dd><span id="cpu">–</span><span class="meter" aria-hidden="true"><span id="cpu-meter"></span></span></dd>
+          </div>
+          <div>
+            <dt>Memory</dt>
+            <dd><span id="memory">–</span><span class="meter" aria-hidden="true"><span id="memory-meter"></span></span></dd>
+          </div>
           <div><dt>Temperature</dt><dd id="temperature">–</dd></div>
         </dl>
         <ul class="services" id="services"></ul>
@@ -43,23 +54,27 @@
       </div>
     </section>
 
-    <!-- Your roadmap. As you finish a step, change its tag, e.g. <span class="tag done">✓ Done</span> -->
+    <!-- Hardware and OS. Keep it coarse: no hostnames, IPs or usernames. -->
     <section class="section">
-      <h2>What I'm building</h2>
-      <ul class="plan">
-        <li><span>This website</span><span class="tag done">✓ Done</span></li>
-        <li><span>A home server</span><span class="tag done">✓ Done</span></li>
-        <li><span>Linux, SSH and Tailscale</span><span class="tag done">✓ Done</span></li>
-        <li><span>Live server status on this page</span><span class="tag done">✓ Done</span></li>
-        <li><span>Music: self-hosted instead of Spotify</span><span class="tag">Planned</span></li>
-        <li><span>Photos: self-hosted instead of Google Photos</span><span class="tag">Planned</span></li>
-      </ul>
+      <details class="card specs">
+        <summary>
+          <span class="specs-title">Server specs</span>
+          <span class="specs-hint">i3-1215U · 24 GB RAM · 512 GB SSD</span>
+        </summary>
+        <dl class="spec-list">
+          <div><dt>Machine</dt><dd>ASUS ExpertBook B1502CBA laptop</dd></div>
+          <div><dt>CPU</dt><dd>Intel Core i3-1215U, 6 cores / 8 threads</dd></div>
+          <div><dt>Graphics</dt><dd>Intel UHD Graphics, with Quick Sync for video transcoding</dd></div>
+          <div><dt>Memory</dt><dd>24 GB</dd></div>
+          <div><dt>Storage</dt><dd>512 GB NVMe SSD</dd></div>
+          <div><dt>Network</dt><dd>Gigabit Ethernet</dd></div>
+          <div><dt>Power</dt><dd>The battery doubles as a small UPS, charging capped at 80%</dd></div>
+          <div><dt>OS</dt><dd>Ubuntu Server 26.04 LTS</dd></div>
+          <div><dt>Access</dt><dd>No open ports: Tailscale for me, a Cloudflare Tunnel for this page</dd></div>
+        </dl>
+      </details>
     </section>
 
   </main>
-
-  <footer class="footer">
-    <a href="https://github.com/TilenZrnec/Personal-Website">Source on GitHub</a>
-  </footer>
 </body>
 </html>

@@ -1,4 +1,4 @@
-// Fetches the home server's status and shows it in the "Homelab" card.
+// Fetches the home server's status and shows it in the "Live status" card.
 // If the server or the Cloudflare Tunnel is down, the request fails and the card says "Offline".
 
 // The status endpoint on the server (server/status-api/), published through a Cloudflare Tunnel. It returns JSON like:
@@ -30,12 +30,20 @@ function setText(id, text) {
   document.getElementById(id).textContent = text;
 }
 
+// Fills a bar under a number: 0–100 percent of its width.
+function setMeter(id, percent) {
+  const width = percent == null ? 0 : Math.min(100, Math.max(0, percent));
+  document.getElementById(id).style.width = `${width}%`;
+}
+
 function showOnline(status) {
   document.getElementById("lab-state").dataset.state = "up";
   setText("lab-state-text", "Online");
   setText("uptime", formatUptime(status.uptime_seconds));
   setText("cpu", formatPercent(status.cpu_percent));
   setText("memory", formatPercent(status.memory_percent));
+  setMeter("cpu-meter", status.cpu_percent);
+  setMeter("memory-meter", status.memory_percent);
   setText("temperature", status.temperature_c == null ? "–" : `${Math.round(status.temperature_c)} °C`);
 
   // Build the list with textContent, not innerHTML, so text from the server can never inject HTML.
@@ -60,6 +68,8 @@ function showOffline() {
   for (const id of ["uptime", "cpu", "memory", "temperature"]) {
     setText(id, "–");
   }
+  setMeter("cpu-meter", null);
+  setMeter("memory-meter", null);
   document.getElementById("services").replaceChildren();
   setText("lab-note", "The server isn't answering. It may be rebooting, or I'm still building it.");
 }

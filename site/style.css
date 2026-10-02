@@ -10,6 +10,7 @@
   --good: #0ca30c;
   --bad: #d03b3b;
   --grey: #898781;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 20px rgb(0 0 0 / 0.04);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +22,7 @@
     --muted: #c3c2b7;
     --line: #2c2c2a;
     --link: #86b6ef;
+    --shadow: none;
   }
 }
 
@@ -42,10 +44,16 @@ a {
 .page {
   max-width: 680px;
   margin: 0 auto;
-  padding: 80px 20px 0;
+  padding: clamp(48px, 10vw, 96px) 20px 96px;
 }
 
 /* ---------- Intro ---------- */
+
+.eyebrow {
+  margin: 0 0 12px;
+  font: 500 14px/1.4 ui-monospace, "Cascadia Code", Consolas, monospace;
+  color: var(--muted);
+}
 
 h1 {
   margin: 0 0 8px;
@@ -62,16 +70,39 @@ h1 {
 
 .links {
   display: flex;
-  gap: 20px;
-  margin: 20px 0 0;
+  gap: 12px;
+  margin: 24px 0 0;
   padding: 0;
   list-style: none;
+}
+
+/* Links in the intro look like small buttons. */
+.links a {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.links a:hover {
+  border-color: var(--grey);
 }
 
 /* ---------- Sections ---------- */
 
 .section {
   margin-top: 64px;
+}
+
+/* Sections close together (status, then specs) only need a small gap. */
+.section + .section {
+  margin-top: 16px;
 }
 
 h2 {
@@ -92,10 +123,11 @@ h2 {
   padding: 20px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
 }
 
-/* ---------- Homelab status ---------- */
+/* ---------- Live status ---------- */
 
 .lab-state {
   display: flex;
@@ -115,6 +147,21 @@ h2 {
 
 .lab-state[data-state="up"] .dot {
   background: var(--good);
+  animation: pulse 2s ease-out infinite;
+}
+
+.lab-state[data-state="down"] .dot {
+  background: var(--bad);
+}
+
+/* A ring that grows and fades around the green dot, like a heartbeat. */
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 50%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 8px transparent;
+  }
 }
 
 .stats {
@@ -133,10 +180,30 @@ h2 {
   margin: 0;
   font-size: 26px;
   font-weight: 600;
+  /* Digits all get the same width, so numbers don't wobble when they update. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin bars under CPU and memory. script.js sets the inner span's width. */
+.meter {
+  display: block;
+  height: 4px;
+  margin-top: 6px;
+  overflow: hidden;
+  background: var(--line);
+  border-radius: 2px;
+}
+
+.meter span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--link);
+  transition: width 0.6s ease;
 }
 
 .services {
-  margin: 16px 0 0;
+  margin: 20px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -148,15 +215,13 @@ h2 {
   border-top: 1px solid var(--line);
 }
 
-.state::before {
-  content: "● ";
-}
-
 .state.up::before {
+  content: "✓ ";
   color: var(--good);
 }
 
 .state.down::before {
+  content: "✕ ";
   color: var(--bad);
 }
 
@@ -170,51 +235,102 @@ h2 {
   display: none;
 }
 
-/* ---------- Roadmap ---------- */
+/* ---------- Server specs ---------- */
 
-.plan {
-  margin: 0;
+/* <details> is the browser's built-in collapsible box: clicking <summary> opens and closes it, no JavaScript needed. */
+.card.specs {
   padding: 0;
-  list-style: none;
 }
 
-.plan li {
+.specs summary {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none; /* hides the default ▸ marker */
 }
 
-.tag {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  white-space: nowrap;
+.specs summary::-webkit-details-marker {
+  display: none; /* the same, for Safari */
 }
 
-.tag.progress {
-  color: var(--link);
+.specs summary:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 16px;
 }
 
-.tag.done {
-  color: var(--text);
+.specs-title {
+  flex: 1;
+  font-weight: 600;
 }
 
-/* ---------- Footer ---------- */
-
-.footer {
-  max-width: 680px;
-  margin: 80px auto 0;
-  padding: 24px 20px 40px;
-  border-top: 1px solid var(--line);
+.specs-hint {
   font-size: 14px;
-  text-align: center;
+  color: var(--muted);
 }
 
-.footer a {
+/* A chevron drawn from two borders: points down when closed, up when open. */
+.specs summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.specs[open] summary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.spec-list {
+  margin: 0;
+  padding: 0 20px 8px;
+}
+
+.spec-list div {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.spec-list dt {
   color: var(--muted);
+}
+
+.spec-list dd {
+  margin: 0;
+}
+
+/* Newer browsers (Chrome, Edge) slide the specs open; others just open them instantly. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (interpolate-size: allow-keywords) {
+    .specs {
+      interpolate-size: allow-keywords;
+    }
+
+    .specs::details-content {
+      height: 0;
+      overflow: clip;
+      transition: height 0.25s ease, content-visibility 0.25s allow-discrete;
+    }
+
+    .specs[open]::details-content {
+      height: auto;
+    }
+  }
+}
+
+/* People who turned off animations in their OS settings get none. */
+@media (prefers-reduced-motion: reduce) {
+  .lab-state[data-state="up"] .dot {
+    animation: none;
+  }
 }
 
 /* ---------- Phones ---------- */
@@ -222,5 +338,14 @@ h2 {
 @media (max-width: 560px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .specs-hint {
+    display: none;
+  }
+
+  .spec-list div {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }
