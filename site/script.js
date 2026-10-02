@@ -1,15 +1,15 @@
 // Fetches the home server's status and shows it in the "Homelab" card.
-// Until the server and its status endpoint exist (step 4 of ROADMAP.md), the card says "Offline".
+// If the server or the Cloudflare Tunnel is down, the request fails and the card says "Offline".
 
-// The public status endpoint you'll build on the server. It should return JSON like:
+// The status endpoint on the server (server/status-api/), published through a Cloudflare Tunnel. It returns JSON like:
 // {
 //   "uptime_seconds": 86400,
 //   "cpu_percent": 12.5,
 //   "memory_percent": 41.0,
 //   "temperature_c": 48.2,
-//   "services": [{ "name": "Music", "up": true }]
+//   "services": [{ "name": "Tailscale", "up": true }]
 // }
-// The server must also allow this site to read it (CORS): Access-Control-Allow-Origin: https://tilenserver.com
+// The server lets this site read it (CORS) by sending Access-Control-Allow-Origin: https://www.tilenserver.com
 const STATUS_URL = "https://lab.tilenserver.com/api/status";
 const REFRESH_EVERY_MS = 30000;
 

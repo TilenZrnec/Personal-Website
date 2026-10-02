@@ -1,0 +1,26 @@
+[Unit]
+Description=Status API for tilenserver.com
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/status-api/status_api.py
+Restart=on-failure
+RestartSec=5
+
+# Run as a temporary user that only exists while the service runs: no home, no files, no sudo.
+DynamicUser=yes
+# Sandbox: the script only reads /proc and /sys and listens on 127.0.0.1.
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+MemoryMax=100M
+
+[Install]
+WantedBy=multi-user.target
