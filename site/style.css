@@ -11,6 +11,9 @@
   --bad: #d03b3b;
   --grey: #898781;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 20px rgb(0 0 0 / 0.04);
+  /* For values (stats, specs, the domain); labels and text use the body font.
+     Consolas comes with Windows; Macs and iPhones don't have it and fall back to their own monospace font. */
+  --mono: Consolas, ui-monospace, Menlo, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,9 +52,20 @@ a {
 
 /* ---------- Intro ---------- */
 
+/* The site name on the left, the links pushed to the right, in one row.
+   flex-wrap lets the links drop below the name if a screen is too narrow for both. */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
 .eyebrow {
-  margin: 0 0 12px;
-  font: 500 14px/1.4 ui-monospace, "Cascadia Code", Consolas, monospace;
+  margin: 0;
+  font: 500 14px/1.4 var(--mono);
   color: var(--muted);
 }
 
@@ -63,15 +77,14 @@ h1 {
 }
 
 .lead {
-  margin: 0 0 16px;
+  margin: 0;
   font-size: 20px;
-  color: var(--muted);
 }
 
 .links {
   display: flex;
   gap: 12px;
-  margin: 24px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -176,12 +189,13 @@ h2 {
   color: var(--muted);
 }
 
+/* In a monospace font every digit has the same width, so numbers don't wobble when they update. */
 .stats dd {
   margin: 0;
+  font-family: var(--mono);
   font-size: 26px;
   font-weight: 600;
-  /* Digits all get the same width, so numbers don't wobble when they update. */
-  font-variant-numeric: tabular-nums;
+  white-space: nowrap; /* never break a value like "1h 14m" over two lines */
 }
 
 /* Thin bars under CPU and memory. script.js sets the inner span's width. */
@@ -215,13 +229,17 @@ h2 {
   border-top: 1px solid var(--line);
 }
 
-.state.up::before {
-  content: "✓ ";
+/* A service's state is just a coloured word: green "Up" or red "Down". */
+.state {
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+.state.up {
   color: var(--good);
 }
 
-.state.down::before {
-  content: "✕ ";
+.state.down {
   color: var(--bad);
 }
 
@@ -267,6 +285,7 @@ h2 {
 }
 
 .specs-hint {
+  font-family: var(--mono);
   font-size: 14px;
   color: var(--muted);
 }
@@ -305,6 +324,7 @@ h2 {
 
 .spec-list dd {
   margin: 0;
+  font-family: var(--mono);
 }
 
 /* Newer browsers (Chrome, Edge) slide the specs open; others just open them instantly. */

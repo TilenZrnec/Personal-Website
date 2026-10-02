@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tilen's home server</title>
-  <meta name="description" content="Tilen's home server: a laptop running Ubuntu Server, with its live status. Built by Tilen Zrnec, a computer science student at FRI, University of Ljubljana.">
+  <title>tilenserver</title>
+  <meta name="description" content="A home server: a laptop running Ubuntu Server around the clock, with its live status.">
   <!-- Tab icon: browsers that understand SVG use icon.svg, older ones favicon.ico; iPhones use apple-touch-icon.png for the home screen. -->
   <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -15,16 +15,17 @@
 <body>
   <main class="page">
 
-    <!-- About the server and you -->
+    <!-- Site name and links in one row, then the heading and a one-line intro -->
     <header>
-      <p class="eyebrow">tilenserver.com</p>
+      <div class="top">
+        <p class="eyebrow">tilenserver.com</p>
+        <ul class="links">
+          <li><a href="https://github.com/TilenZrnec/tilenserver-homelab">Source on GitHub</a></li>
+          <!-- <li><a href="https://www.linkedin.com/in/YOUR-NAME/">LinkedIn</a></li> -->
+        </ul>
+      </div>
       <h1>Tilen's home server</h1>
       <p class="lead">A laptop at home that runs Linux around the clock.</p>
-      <p>I'm Tilen Zrnec, a computer science student at FRI, University of Ljubljana. I use this server to learn self-hosting, and soon it will stream my music and keep my photos. Below is what it's doing right now.</p>
-      <ul class="links">
-        <li><a href="https://github.com/TilenZrnec/tilenserver-homelab">Source on GitHub</a></li>
-        <!-- <li><a href="https://www.linkedin.com/in/YOUR-NAME/">LinkedIn</a></li> -->
-      </ul>
     </header>
 
     <!-- Live status from the home server. script.js fills in the values. -->

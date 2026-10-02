@@ -13,13 +13,14 @@
 const STATUS_URL = "https://lab.tilenserver.com/api/status";
 const REFRESH_EVERY_MS = 30000;
 
+// Short units ("1h 14m", "3d 4h") so the value fits on one line in its column.
 function formatUptime(seconds) {
   const days = Math.floor(seconds / 86400);
   const hours = Math.floor((seconds % 86400) / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
-  if (days > 0) return `${days} d ${hours} h`;
-  if (hours > 0) return `${hours} h ${minutes} min`;
-  return `${minutes} min`;
+  if (days > 0) return `${days}d ${hours}h`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
 }
 
 function formatPercent(value) {
